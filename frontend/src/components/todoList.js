@@ -1,39 +1,46 @@
 import React from 'react';
-// import '../css/todoList';
-const TodoList = ({todos, onDelete}) =>{ 
-    const handleDelete=(id)=>{
-        fetch('http://localhost:8080/api/todo/'+id,{
-            method:'delete'}).then((res)=>{
-                onDelete(id);
-             })
+import '../css/todoList.css'
+const TodoList = ({ todos, onDelete }) => {
+    const handleDelete = (id) => {
+        fetch('http://localhost:8080/api/todo/' + id, {
+            method: 'delete'
+        }).then((res) => {
+            onDelete(id);
+        })
             .catch(
-                err=>{
-                    console.log(err)})
+                err => {
+                    console.log(err)
+                })
     }
-    return(
-    <><div>
-        
-        <table id="todos">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                {todos.map((todo,index)=>{
-                    return <tr key={index}>
-                        <td>{todo.id}</td>
-                        <td>{todo.title}</td>
-                        <td>{todo.description}</td>
-                        <td><button onClick={()=> handleDelete(todo.id)}>delete</button></td>
+
+    return (
+        <><div>
+            <table id="todos">
+                <thead>
+                    <tr>
+                        <th><center>Id</center></th>
+                        <th><center>Title</center></th>
+                        <th><center>Description</center></th>
+                        <th></th>
                     </tr>
-                })}
-            </tbody>
-        </table>
-      </div>
-    </>
-        );
+                </thead>
+                <tbody>
+                    {todos.map((todo, index) => {
+                        return <tr key={index}>
+                            <td><center>{todo.id}</center></td>
+                            <td><center>{todo.title}</center></td>
+                            <td><center>{todo.description}</center></td>
+                            <td>
+                                <center>
+                                    <button id='delete_button' onClick={() => handleDelete(todo.id)}>Delete</button>
+                                </center>
+                            </td>
+                        </tr>
+                    })}
+                </tbody>
+            </table>
+        </div>
+        </>
+    );
 }
 export default TodoList;
