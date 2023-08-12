@@ -1,81 +1,74 @@
-//const elasticClient = require("../elasticSearch/elastic.client");
+const jwt = require("jsonwebtoken")
 const db = require("../models");
-const Todo = db.todos;
+const Note = db.notes;
 
-exports.create = async (req, res) => {
+exports.createNote = async (req, res) => {
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.replace(/Bearer\s+/, '')
+  const userToken = jwt.decode(token)
   if (!req.body.title) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
     return;
   }
-  const document = {
+  const note = {
+    user_id: userToken.results.id,
     title: req.body.title,
     description: req.body.description
   }
-  const results = await Todo.create(document);
-  //    await elasticClient.index({
-  //     index: "todo",
-  //     document
-
-  // });
+  const results = await Note.create(note);
   res.send(results);
 };
 
-
-exports.findAll = async (req, res) => {
-
-  Todo.findAll().then(data => {
-    res.send(data);
-  })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving todos."
-      });
-    });;
+exports.findAllNotes = async (req, res) => {
+  const authHeader = req.headers.authorization
+  const token = authHeader && authHeader.replace(/Bearer\s+/, '')
+  const userToken = jwt.decode(token)
+  if (userToken != null) {
+    Note.findAll({ where: { user_id: userToken.results.id } }).then(data => {
+      res.send(data);
+    })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving notes."
+        });
+      });;
+  }
+  else {
+    res.status(500).send({
+      message: "Invalid user."
+    });
+  }
 
 };
 
-
-
-exports.findTodo = async (req, res) => {
+exports.findNote = async (req, res) => {
   const title = req.params.title;
-  // const body = await elasticClient.search({
-  //   index: 'todo',
-  //   body: {
-  //     query: {
-  //       match: { "title": title }
-  //     }
-  //   }
-  // });
-  // const result =body.hits.hits.map(data=>{return data._source})
-  const todo = Todo.findByPk(title)
-  res.send(todo)
+  const note = Note.findByPk(title)
+  res.send(note)
 }
 
-
-
-exports.deleteTodo = (req, res) => {
+exports.deleteNote = (req, res) => {
   const id = req.params.id;
-
-  Todo.destroy({
+  Note.destroy({
     where: { id: id }
   })
     .then(num => {
       if (num == 1) {
         res.send({
-          message: "Todo was deleted successfully!"
+          message: "Note was deleted successfully!"
         });
       } else {
         res.send({
-          message: `Cannot delete Todo with id=${id}. Maybe Todo was not found!`
+          message: `Cannot delete Note with id=${id}. Maybe Note was not found!`
         });
       }
     })
     .catch(err => {
       res.status(500).send({
-        message: "Could not delete Todo with id=" + id
+        message: "Could not delete Note with id=" + id
       });
     });
 }

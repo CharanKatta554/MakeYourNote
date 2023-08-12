@@ -1,7 +1,10 @@
 const todos = require("../controllers/todo.controller.js");
+const users = require("../controllers/user.controller.js");
 const router = require("express").Router();
-router.post("/todo", todos.create);
-router.get("/todo", todos.findAll);
-router.get("/todo/:title", todos.findTodo);
-router.delete("/todo/:id", todos.deleteTodo);
+router.post("/note", todos.createNote);
+router.get("/note", todos.findAllNotes);
+router.get("/note/:title", todos.findNote);
+router.delete("/note/:id", todos.deleteNote);
+router.post("/register", users.register);
+router.post("/login", users.login);
 module.exports = router;

@@ -1,0 +1,13 @@
+.header {
+    margin: 0;
+    padding: 1px;
+    color: white;
+    background-color: gray;
+}
+
+.logout {
+    position: absolute;
+    top: 15px;
+    right: 16px;
+
+}

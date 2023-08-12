@@ -1,10 +1,9 @@
 import React from 'react';
-import TodoComponent from './components/todoComponent';
-
+import Home from './components/home';
 function App() {
   return (
     <div className="App">
-      <TodoComponent />
+      <Home />
     </div>
   );
 }
