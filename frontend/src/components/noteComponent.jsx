@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 import jwt from 'jwt-decode'
-import TodoList from './listOfNotes';
+import NoteList from './listOfNotes';
 import CreateNote from './createNote';
 import "../css/noteComponent.css"
 import Header from './header';
 
 const NoteComponent = () => {
-    const [todoList, setTodoList] = useState([])
+    const [noteList, setNoteList] = useState([])
     const token = localStorage.getItem("token");
     const user = jwt(token)
     const name = user.results.name
@@ -19,20 +19,20 @@ const NoteComponent = () => {
                     return response.json()
                 })
                 .then(data => {
-                    setTodoList(data)
+                    setNoteList(data)
                 })
         }; fetchData();
     }, [])
 
-    const onCreate = (todo) => {
-        let newList = todoList;
-        newList.push(todo);
-        setTodoList(newList)
+    const onCreate = (note) => {
+        let newList = noteList;
+        newList.push(note);
+        setNoteList(newList)
     }
 
     const onDelete = (id) => {
-        const newList = todoList.filter(todo => todo.id !== id);
-        setTodoList(newList)
+        const newList = noteList.filter(note => note.id !== id);
+        setNoteList(newList)
     }
 
     return (
@@ -42,7 +42,7 @@ const NoteComponent = () => {
                 <h2>{name}</h2>
             </div>
             <CreateNote onCreate={onCreate} />
-            <TodoList todos={todoList} onDelete={onDelete} />
+            <NoteList notes={noteList} onDelete={onDelete} />
         </div>
     )
 }

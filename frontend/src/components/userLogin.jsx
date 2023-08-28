@@ -50,8 +50,7 @@ const Login = () => {
         <center>
             <div class="login-page">
                 <div class="login-header">
-                    <h4>LOGIN</h4>
-                    <p>Please enter your credentials to login.</p>
+                    <h4>Login</h4>
                 </div>
                 <form class="login-form" onSubmit={handleSubmit}>
                     <div class="loginTextField">

@@ -1,6 +1,6 @@
 import React from 'react';
 import '../css/listOfNotes.css'
-const TodoList = ({ todos, onDelete }) => {
+const NoteList = ({ notes, onDelete }) => {
     const handleDelete = (id) => {
         fetch('http://localhost:8080/api/note/' + id, {
             method: 'delete'
@@ -16,19 +16,19 @@ const TodoList = ({ todos, onDelete }) => {
     return (
         <>
             <div>
-                {todos.map((todo, index) => {
+                {notes.toReversed().map((note, index) => {
                     return <div class="note">
 
                         <center>
-                            <h3><b>{todo.title}</b></h3>
+                            <h3><b>{note.title}</b></h3>
                         </center>
                         <div class='content'>
-                            <p>{todo.description}</p>
-                            <p id='date'>{todo.createdAt}</p>
+                            <p>{note.description}</p>
+                            <p id='date'>{note.createdAt}</p>
                             <div class="delete">
-                                <button id='delete_button' onClick={() => handleDelete(todo.id)}>Delete</button>
+                                <button id='delete_button' onClick={() => handleDelete(note.id)}>Delete</button>
                             </div>
-                            {/* <button id='edit_button' onClick={() => handleEdit(todo.id)}>Delete</button> */}
+                            {/* <button id='edit_button' onClick={() => handleEdit(note.id)}>Delete</button> */}
                         </div>
                     </div>
                 })}
@@ -36,4 +36,4 @@ const TodoList = ({ todos, onDelete }) => {
             </div>
         </>)
 }
-export default TodoList;
+export default NoteList;

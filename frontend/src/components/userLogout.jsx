@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import "../css/userLogOut.css"
 const LogOut = () => {
     const navigate = useNavigate()
     const logout = () => {
@@ -7,7 +8,7 @@ const LogOut = () => {
         navigate("/")
     }
     return (
-        <div className='logout'>
+        <div>
             <button id="logOutButton" onClick={logout}>Logout</button>
         </div>
     )
