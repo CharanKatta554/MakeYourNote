@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const todoRouter = require("./app/routes/todo.routes");
+const todoRouter = require("./app/routes/note.routes");
 const app = express();
 const db = require("./app/models");
 db.sequelize.sync()
