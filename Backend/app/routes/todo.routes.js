@@ -1,4 +1,4 @@
-const todos = require("../controllers/todo.controller.js");
+const todos = require("../controllers/note.controller.js");
 const users = require("../controllers/user.controller.js");
 const router = require("express").Router();
 router.post("/note", todos.createNote);
